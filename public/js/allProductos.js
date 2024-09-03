@@ -35,6 +35,7 @@ $( document ).ready( function ()
                     }
 
                     $( '#tbody' ).html( resultado );
+                    $( '#total_products' ).html( total );
 
                 } else
                 {

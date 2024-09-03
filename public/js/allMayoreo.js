@@ -32,6 +32,7 @@ $( document ).ready( function ()
                     }
 
                     $( '#tbodymayoreos' ).html( resultado );
+                    $( '#total_mayoreo' ).html( total );
 
                 } else
                 {

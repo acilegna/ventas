@@ -38,6 +38,7 @@ class VentasController extends Controller
         //$id_cli= $request->input("id_cliente");
         $total_venta = $request->input("totalP");
         $productos = $this->obtenerProductos();
+        
         //insertar producto en venta antes para sacar id
         $venta = new Sell();
         $venta->total = 0;
@@ -45,23 +46,23 @@ class VentasController extends Controller
 
         $venta->save();
 
-        // Recorrer arreglo carrito de compras
-        foreach ($productos as $producto) {
-            // El producto que se vende mandar datos para agregar en venta...  
-            $venta = Sell::latest('id')->first();
-            $id_venta = $venta["id"];
-            $producto_vendido = new SellProduct();
-            $userLog = auth()->id();
-            $producto_vendido->fill([
-                "id_venta" => $id_venta,
-                "id_user" => $userLog,
-                "id_producto" => $producto->id,
-                "descripcion" => $producto->descripcion,
-                "precio" => $producto->p_venta,
-                "cantidad" => $producto->cantidad,
-            ]);
-
-            //MOVIMIENTOS CAJA 
+                // Recorrer arreglo carrito de compras
+                foreach ($productos as $producto) {
+                    // El producto que se vende mandar datos para agregar en venta...  
+                    $venta = Sell::latest('id')->first();
+                    $id_venta = $venta["id"];
+                    $producto_vendido = new SellProduct();
+                    $userLog = auth()->id();
+                    $producto_vendido->fill([
+                        "id_venta" => $id_venta,
+                        "id_user" => $userLog,
+                        "id_producto" => $producto->id,
+                        "descripcion" => $producto->descripcion,
+                        "precio" => $producto->p_venta,
+                        "cantidad" => $producto->cantidad,
+                    ]);
+        
+                  //MOVIMIENTOS CAJA 
             //consultar turnos abiertos
             $movimientos = MovePayment::turnOpen();
             $id = $movimientos[0]->id;
@@ -86,6 +87,18 @@ class VentasController extends Controller
 
         $this->vaciarProductos();
         return redirect()->route("viewVents")->with("mensaje", "Venta terminada");
+        
+                    
+                
+
+        
+
+            
+
+            
+        
+
+       
     }
 
     public function cancelarVenta()

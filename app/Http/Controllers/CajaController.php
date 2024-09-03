@@ -247,14 +247,17 @@ class CajaController extends Controller
         //obtener datos con sttaus abierto
         $consultaMovcaja = MovePayment::getTurnoOpen($sesionId_usuTurno);
         foreach ($consultaMovcaja as $key => $value) {
+          
         }
-        $idCaja = $value->id_caja;
+        
+         $idCaja = $value->id_caja;
         $caja = CashBox::updateBoxActive($idCaja);
-        $Movcaja = MovePayment::updateTurnoOpen($sesionId_usuTurno, $efectivoCaja = 0, $fechaHora);
+      $Movcaja = MovePayment::updateTurnoOpen($sesionId_usuTurno, $efectivoCaja = 0, $fechaHora);
     }
 
     public function operacionCaja(Request $request)
     {
+        // Obtener usuario logueado y fechaHora
         $datos = $this->obtenerDatos();
         //sacar datos del arreglo
         $id_usu = $datos[0];
@@ -276,6 +279,19 @@ class CajaController extends Controller
             $sesionId_usuTurno = session('id_usuTurno');
             //id caja que se eligio al entrar con nuevo turno
             $sesionId_caja = session('id_caja');
+           
+
+            $regis= MovePayment::getTurnoOpen($sesionId_usuTurno);
+            $dinero_ini=$regis[0]->dinero_inicial;       
+            $acomulado_v=$regis[0]->acomulado_ventas;
+            $acomulado_entra=$regis[0]->acomulado_entradas;
+            $acomulado_sa=$regis[0]->acomulado_salidas;
+              $totalCaja= ($dinero_ini +  $acomulado_entra + $acomulado_v) - ($acomulado_sa);  
+           
+           $actualizatotal=   MovePayment::updateAll($sesionId_usuTurno, $fechaHora, $totalCaja);
+            ///fin suma     
+         
+        ///fin suma
 
             //si llega vacia la variable. Cerrar caja normal
             if (empty($sesionId_usuTurno)) {
@@ -294,7 +310,7 @@ class CajaController extends Controller
                 session()->forget('id_usuTurno');
                 Auth::logout();
                 return redirect('/');
-            }
+            }  
         }
 
         if ($request->input('mantener') == 'open') {

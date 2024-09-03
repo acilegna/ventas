@@ -25,7 +25,7 @@
                     </form>
                 </div>
                 <div class=" col-md-5">
-                    <form action='{{ route('terminarOCancelarVenta') }}' method="post">
+                    <form action="{{ route('terminarOCancelarVenta') }}" method="post">
                         @csrf
                         <div class="form-group">
                             <div class="input-group mb-3">

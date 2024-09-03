@@ -42,15 +42,15 @@ class MovePayment extends Model
         'inicio_en', 'termino_en'
     ];
 
-    public static function updateAll($id_user, $fechaHora)
+    public static function updateAll($id_user, $fechaHora, $opcion=9 )
     {
         return self::where("id_usu", "=", $id_user)->where("status", "=", "Abierto")->update([
-            "acomulado_ventas" => 0,
-            "acomulado_entradas" => 0,
-            "acomulado_salidas" => 0,
-            "efectivo_cierre" => 0,
-            "total_caja" => 0,
-            "numero_ventas" => 0,
+           // "acomulado_ventas" => 0,
+            //"acomulado_entradas" => 0,
+            //"acomulado_salidas" => 0,
+           // "efectivo_cierre" => 0,
+           "total_caja" => $opcion,
+            //"numero_ventas" => 0,
             "status" => "cerrado",
             "termino_en" => $fechaHora
         ]);

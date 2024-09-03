@@ -85,8 +85,8 @@ class ProductosController extends Controller
 
 
     //modificar producto   
-    $productos->descripcion  = $request->inputDescripcion;
-    $productos->categoria   = $request->inputCategoria;
+   // $productos->descripcion  = $request->inputDescripcion;
+    //$productos->categoria   = $request->inputCategoria;
     $productos->p_compra    = $request->inputPrecioc;
     $productos->ganancia    = $request->inputGanancia;
     $productos->p_venta     = $request->inputPreciov;

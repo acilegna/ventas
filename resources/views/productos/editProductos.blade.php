@@ -21,13 +21,13 @@
                     <div class="form-group col-md-3">
                         <label for="inputDescripcion">Descripcion</label>
                         <input type="text" class="form-control" name="inputDescripcion" id="inputDescripcion"
-                            value="{{ $product->descripcion }}" required="" pattern="[A-Za-z]+">
+                            value="{{ $product->descripcion }}" required="" pattern="[A-Za-z]+" disabled>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="inputCategoria">Categoria</label>
                         <input type="text" class="form-control" name="inputCategoria" id="inputCategoria"
-                            value="{{ $product->categoria }}" required="" pattern="[A-Za-z]+">
+                            value="{{ $product->categoria }}" required="" pattern="[A-Za-z]+" disabled>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputHay">Existencia</label>
