@@ -19,6 +19,7 @@ class MovePayment extends Model
     {
         $this->attributes['id_usu'] = $id_usu;
     }
+ 
     public function setDineroInicialAttribute($inicial)
     {
         $this->attributes['dinero_inicial'] = $inicial;
@@ -31,7 +32,10 @@ class MovePayment extends Model
     {
         $this->attributes['status'] = ucfirst($status);
     }
-
+    public function setTotalCajaAttribute($totalcaja)
+    {
+        $this->attributes['total_caja'] = ucfirst($totalcaja);
+    }
 
     //lista blanca atributos que deberían ser asignables en masa
     protected $fillable =
@@ -42,13 +46,13 @@ class MovePayment extends Model
         'inicio_en', 'termino_en'
     ];
 
-    public static function updateAll($id_user, $fechaHora, $opcion=9 )
+    public static function updateStatus($id_user, $fechaHora, $opcion=9, $cierre=0 )
     {
         return self::where("id_usu", "=", $id_user)->where("status", "=", "Abierto")->update([
            // "acomulado_ventas" => 0,
             //"acomulado_entradas" => 0,
             //"acomulado_salidas" => 0,
-           // "efectivo_cierre" => 0,
+           "efectivo_cierre" => $cierre,
            "total_caja" => $opcion,
             //"numero_ventas" => 0,
             "status" => "cerrado",
@@ -61,16 +65,23 @@ class MovePayment extends Model
         return self::where("id_usu", "=", $sesionUserTurno)->where("status", "=", "Abierto")->get();
     }
 
-    public static function updateTurnoOpen($sesionUserTurno, $efectivoCaja, $fechaHora)
+    public static function updateCaja($sesionUserTurno, $fechaHora, $efectivoCaja)
     {
         return self::where("id_usu", "=", $sesionUserTurno)->where("status", "=", "Abierto")->update([
-            "acomulado_ventas" => 0,
-            "acomulado_entradas" => 0,
-            "acomulado_salidas" => 0,
+             
             "total_caja" => $efectivoCaja,
-            "numero_ventas" => 0,
-            "status" => "cerrado",
+        
+         
             "termino_en" => $fechaHora
+        ]);
+    }
+
+
+    public static function updatVentas($id_usu_openturno,$numero)
+    {
+        return self::where("id_usu", "=", $id_usu_openturno)->where("status", "=", "Abierto")->update([
+              
+            "numero_ventas" => $numero
         ]);
     }
 

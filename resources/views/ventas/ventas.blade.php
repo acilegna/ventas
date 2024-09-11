@@ -342,7 +342,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-text">Pago con</span>
                                                 <span class="input-group-text">$</span>
-                                                <input id="pago" class="form-control">
+                                                <input id="pago" name="pago" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -351,7 +351,7 @@
                                             <div class="input-group">
                                                 <span class="input-group-text">Su cambio</span>
                                                 <span class="input-group-text">$</span>
-                                                <input id="cambio" type="number" class="form-control" value="0"
+                                                <input id="cambio" name="cambio" type="number" class="form-control" value="0"
                                                     readonly="true">
                                             </div>
                                         </div>

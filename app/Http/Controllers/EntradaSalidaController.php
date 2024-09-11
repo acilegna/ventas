@@ -60,9 +60,7 @@ class EntradaSalidaController extends Controller
         $entradaSalida = $request->cantidadEntrada;
         $comentario = $request->comentario;
         $tipo = 'entrada';
-        //fecha y hora
-        $time = time();
-        $fechaHora = date('d-m-Y H:i:s', $time);
+       
         $option = 0;
         $data = [
             'id_user' => $id_log,
@@ -70,7 +68,7 @@ class EntradaSalidaController extends Controller
             'cantidad' => $entradaSalida,
             'tipo' => $tipo,
             'comentario' => $comentario,
-            'hora_fecha' => $fechaHora,
+            
         ];
         $datosMovepayment = [$id, $entradaSalida, $option, $acomulado_salidas, $acomulado_entradas];
 

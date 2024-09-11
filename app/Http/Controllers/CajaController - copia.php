@@ -112,7 +112,7 @@ class CajaController extends Controller
             'inputStatus' => 'required|nullable',
         ]);
         $nameCaja = $request->inputCaja;
-        //recoger valor seleccionado  
+        //recoger valor seleccionado  ion
         $status = $request->get('inputStatus');
         $caja = new CashBox;
         $caja->descripcion = $nameCaja;
@@ -122,7 +122,27 @@ class CajaController extends Controller
         return redirect('allcaja');
     }
 
- 
+    public function saveMovimientoscaja($id_caja, $inicial, $id_usu, $fechaHora)
+    {
+        $total_venta = $this->totalVenta();
+        session(['id_caja' => $id_caja]);
+        $sesionId_caja = session('id_caja');
+        if ($total_venta == null) {
+            $total_venta = 0;
+        } else {
+            $total_venta;
+        }
+        //Crear registro.
+        $status = 'abierto';
+        $data = [
+            'id_caja' => $id_caja,
+            'id_usu' => $id_usu,
+            'dinero_inicial' => $inicial,
+            'status' => $status,
+            'inicio_en' => $fechaHora,
+        ];
+        MovePayment::create($data);
+    }
 
     public function turnoOpen()
     {
@@ -149,10 +169,8 @@ class CajaController extends Controller
         return $datos;
     }
 
-///REVISAR
     public function altaRegistroFin(Request $request)
     {
-        $totalCaja = $this->sumaTotalTurnoOpen();
         $efectivoCaja = $request->efectivoFinal;
         $id_user = session('id_usuTurno');
         $datos = $this->obtenerDatos();
@@ -162,7 +180,7 @@ class CajaController extends Controller
         //consulta para comparar total en caja con efectivo al cierre
         $efectivo = MovePayment::getTurnoOpen($id_user);
 
-        $totalSuma = $efectivo[0]->total_caja;
+        $totalSuma = $efectivo[0]->efectivo_cierre;
         $id_mov = $efectivo[0]->id;
         //contar total de id, si hay mas de 3 bloquear pantalla y solicitar contraseña al admin
         $ids = MoveClosing::getTotalId($id_mov);
@@ -175,8 +193,7 @@ class CajaController extends Controller
                 $idCaja = $consultaMovcaja[0]->id_caja;
                 $caja = CashBox::updateBoxActive($idCaja);
                 //obtiene registro del  movimiento con usuario logueado y status abierto y modifica
-                //pendiente
-            $Movcaja = MovePayment::updateStatus($id_user,  $fechaHora,  $totalCaja, $efectivoCaja );
+                $Movcaja = MovePayment::updateTurnoOpen($id_user, $efectivoCaja, $fechaHora);
                 //destruir sesion
                 session()->forget('id_usuTurno');
                 Auth::logout();
@@ -189,15 +206,13 @@ class CajaController extends Controller
             $data = [
                 'id_user' => $id_user,
                 'id_mov' => $id_mov,
-               // 'fechaHora' => $fechaHora,
+                'fechaHora' => $fechaHora,
             ];
 
             MoveClosing::create($data);
             return view('cajas.registroFinal')->with('alert');
         }
     }
-
-
 
     public function envia(Request $request)
     {
@@ -209,7 +224,7 @@ class CajaController extends Controller
         if ($request->input('cerrarTurno') == 'closeTurno') {
 
             //usar funcion para enviar variable alert
-            $this->  funcion();
+            $this->funcion();
             //se envia vacia
             return view('cajas.registroFinal')->with('alert');
         } else {
@@ -222,7 +237,7 @@ class CajaController extends Controller
     public function cerrarCaja($fechaHora, $sesionId_caja, $id_usu)
     {
         //obtiene registro del  movimiento con usuario logueado y status abierto
-        $Movcaja = MovePayment::updateStatus($id_usu, $fechaHora);
+        $Movcaja = MovePayment::updateAll($id_usu, $fechaHora);
         //actualizar caja a disponible despues de cerrar
         $caja = CashBox::updateStatusActive($sesionId_caja);
     }
@@ -234,49 +249,18 @@ class CajaController extends Controller
         foreach ($consultaMovcaja as $key => $value) {
             $idCaja = $value->id_caja;
             $caja = CashBox::updateBoxActive($idCaja);
-            //pendeintes
-          //$Movcaja = MovePayment::updateTurnoOpen($sesionId_usuTurno, $efectivoCaja = 0, $fechaHora);
+          $Movcaja = MovePayment::updateTurnoOpen($sesionId_usuTurno, $efectivoCaja = 0, $fechaHora);
         }
         
       
     }
- 
-
-public function sumaTotalTurnoOpen(){
-    $datos = $this->obtenerDatos();
-    //sacar datos del arreglo
-    $id_usu = $datos[0];
-
-    $regis= MovePayment::getTurnoOpen($id_usu);
-    $dinero_ini=$regis[0]->dinero_inicial;       
-    $acomulado_v=$regis[0]->acomulado_ventas;
-    $acomulado_entra=$regis[0]->acomulado_entradas;
-    $acomulado_sa=$regis[0]->acomulado_salidas;
-    $totalCaja= ($dinero_ini +  $acomulado_entra + $acomulado_v) - ($acomulado_sa); 
-    return $totalCaja;
-}
-
-
-public function saveMovimientoscaja($id_caja, $inicial, $id_usu, $fechaHora)
-{
- 
-    //Crear registro.
-    $status = 'abierto';
-    $data = [
-        'id_caja' => $id_caja,
-        'id_usu' => $id_usu,
-    
-        'dinero_inicial' => $inicial,
-        'status' => $status,
-        'inicio_en' => $fechaHora,
-    ];
-    MovePayment::create($data); 
-}
-
 
     public function operacionCaja(Request $request)
     {
-          
+          //id de usuario  que continuaremos turno en una sesion
+          $sesionId_usuTurno = session('id_usuTurno');
+          //id caja que se eligio al entrar con nuevo turno
+          $sesionId_caja = session('id_caja');
         // Obtener usuario logueado y fechaHora
         $datos = $this->obtenerDatos();
         //sacar datos del arreglo
@@ -285,94 +269,68 @@ public function saveMovimientoscaja($id_caja, $inicial, $id_usu, $fechaHora)
         //recibir dinero inicial
         $inicial = $request->inicial;
         //recibir id de la caja que inicia sesion
-      
         $id_caja = $request->caja;
-      
+        //modificar status de caja  ponerla  inactiva
+        $caja = CashBox::updateBoxInactive($id_caja);
+        $regis= MovePayment::getTurnoOpen($sesionId_usuTurno);
+        if ($request->input('registrar') == 'regCaja') {
+            $this->saveMovimientoscaja($id_caja, $inicial, $id_usu, $fechaHora);
+            //return view('panel.panel');
+            return redirect('/welcome');
+        }
+        if ($request->input('cerrar') == 'close') {
 
-/* $request->session()->put('id_caja', $request->input("caja"));
-        $id_caja = session()->get('id_caja'); */
-        
-    
-        
-         //modificar status de caja  ponerla  inactiva
-    $caja = CashBox::updateBoxInactive( $id_caja);
-    
-   
- if ($request->input('registrar') == 'regCaja') {
+          
+           
 
-   
-    
-   
-        $this->saveMovimientoscaja($id_caja, $inicial, $id_usu,   $fechaHora);
-        return redirect('/welcome');  
-  
-
-     
-    
-    
-      
-      
-    }   
-
-  
-
-     
-    if ($request->input('cerrar') == 'close') {
- 
-        $id = $this->getIdcaja();
-        
-        $this->sumarTotal($value=1);
-        $this->cerrarCaja($fechaHora, $id, $id_usu);
-        $caja = CashBox::updateBoxActive($id);
-     
-      Auth::logout();
-    return redirect('/');
-  
-
-    }
-    if ($request->input('mantener') == 'open') {
+           
+            $dinero_ini=$regis[0]->dinero_inicial;       
+            $acomulado_v=$regis[0]->acomulado_ventas;
+            $acomulado_entra=$regis[0]->acomulado_entradas;
+            $acomulado_sa=$regis[0]->acomulado_salidas;
+              $totalCaja= ($dinero_ini +  $acomulado_entra + $acomulado_v) - ($acomulado_sa);  
+           
+           $actualizatotal=   MovePayment::updateAll($sesionId_usuTurno, $fechaHora, $totalCaja);
+            ///fin suma     
          
+        ///fin suma
 
-        $id = $this->getIdcaja();
-        $this->sumarTotal($value=2);
-        $caja = CashBox::updateBoxActive( $id);
-  
-        Auth::logout();
-        return redirect('/');
+            //si llega vacia la variable. Cerrar caja normal
+            if (empty($sesionId_usuTurno)) {
+
+                $this->cerrarCaja($fechaHora, $sesionId_caja, $id_usu);
+                //destruir sesion de caja
+                session()->forget('$sesionId_caja');
+                Auth::logout();
+                return redirect('/');
+
+                //cerrar caja, cuando se quedo un turno abierto
+            } else {
+
+                $this->cerrarTurno($fechaHora, $sesionId_usuTurno);
+                //destruir sesion de usurio turno
+                session()->forget('id_usuTurno');
+                Auth::logout();
+                return redirect('/');
+            }  
+        }
+
+        if ($request->input('mantener') == 'open') {
+            Auth::logout();
+            return redirect('/');
+        }
     }
- }
 
 
 
-public function getIdcaja(){
-    $datos = $this->obtenerDatos();     
-    $id_usu = $datos[0];
-
-    $idcaja = MovePayment::getTurnoOpen($id_usu);
-    $id = $idcaja[0]->id_caja;
-    return $id;
-}
-
- public function sumarTotal($value ){
-    $datos = $this->obtenerDatos();
-    //sacar datos del arreglo
-    $id_usu = $datos[0];
-    $fechaHora = $datos[1];
-    $totalCaja = $this->sumaTotalTurnoOpen();
-    if ($value==1) {
 
 
-    $actualizatotal=   MovePayment::updateStatus($id_usu, $fechaHora, $totalCaja);
-    }
-    else{
-        MovePayment::updateCaja($id_usu, $fechaHora, $totalCaja);
-    }
-   
-   
- }
 
 
- 
+
+
+
+
   
 
 }
