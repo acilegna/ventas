@@ -60,7 +60,7 @@ class EntradaSalidaController extends Controller
         $entradaSalida = $request->cantidadEntrada;
         $comentario = $request->comentario;
         $tipo = 'entrada';
-       
+
         $option = 0;
         $data = [
             'id_user' => $id_log,
@@ -68,7 +68,7 @@ class EntradaSalidaController extends Controller
             'cantidad' => $entradaSalida,
             'tipo' => $tipo,
             'comentario' => $comentario,
-            
+
         ];
         $datosMovepayment = [$id, $entradaSalida, $option, $acomulado_salidas, $acomulado_entradas];
 

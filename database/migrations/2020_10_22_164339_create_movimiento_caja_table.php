@@ -25,8 +25,8 @@ class CreateMovimientoCajaTable extends Migration
             $table->float('total_caja')->default(0);
             $table->integer('numero_ventas');
             $table->string('status');
-            $table->string('inicio_en'); 
-            $table->string('termino_en');     
+            $table->dateTime('inicio_en');
+            $table->dateTime('termino_en');    
         
         });
     }

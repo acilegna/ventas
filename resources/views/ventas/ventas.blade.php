@@ -194,8 +194,8 @@
 
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">Teclea las primeras letras o codigo del
-                                producto</label>
-                            <input type="text" class="form-control" id="busca" name="busca" placeholder="Buscar">
+                                productos</label>
+                            <input type="text" class="form-control" id="buscaProducto" name="buscaProducto" placeholder="Buscar">
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
@@ -208,7 +208,7 @@
                                         <th style="width:7%;" id="mitable">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tbodyV"></tbody>
+                                <tbody id="tbodyBuscar"></tbody>
                                 <tfoot style="display:none">
                                     <tr>
                                         <th colspan="6">
