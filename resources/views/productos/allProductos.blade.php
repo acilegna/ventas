@@ -31,7 +31,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<th colspan="6"><h5 class="izquierda">Registros encontrados: <span id="total_records"></span></h5></th>
+				<th colspan="6"><h5 class="izquierda">Registros encontrados: <span id="total_products"></span></h5></th>
 			</tr>
   		</tfoot>
 	</table>

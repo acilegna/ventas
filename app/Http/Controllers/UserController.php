@@ -30,7 +30,7 @@ class UserController extends Controller
     return redirect()->route('viewUser')
       ->with([
         'mensaje' => 'El Registro se ha guardado correctamente',
-        'tipo' => 'danger'
+        'tipo' => 'info'
       ]);
   }
   public function allUsers(Request $request)

@@ -11,7 +11,7 @@ class CashBox extends Model
     public $timestamps = true;
 
     //lista blanca atributos que deberían ser asignables en masa
-    protected $fillable = ['id', 'descripcion', 'status'];
+    protected $fillable = ['id', 'descripcion', 'nameclient','status'];
 
     //actualizar status al cerrar caja
     public static function updateStatusActive($sesionId_caja)
@@ -36,9 +36,9 @@ class CashBox extends Model
     {
         return self::where('id', $idCaja)->get();
     }
-    public static function updateBoxActive($idCaja)
+    public static function updateBoxActive($id)
     {
-        return self::where("id", $idCaja)->update(["status" => "1"]);
+        return self::where("id", $id)->update(["status" => "1"]);
     }
     public static function updateBoxInactive($id_caja)
     {

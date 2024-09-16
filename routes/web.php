@@ -56,7 +56,9 @@ Route::get('/entrada', 'EntradasController@viewEntrada')->name('entrada');
 Route::get('/welcome', 'HomeController@welcome')->name('welcome');
 //CAJA
 Route::post('/envia', 'CajaController@envia')->name('envia');
+
 Route::post('/caja', 'CajaController@operacionCaja')->name('caja');
+
 Route::get('/viewcaja', 'CajaController@vistaCaja')->name('viewcaja');
 Route::post('/newcaja', 'CajaController@newCaja')->name('newcaja');
 Route::get('/allcaja', 'CajaController@allCajas')->name('allcaja');

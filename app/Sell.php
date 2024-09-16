@@ -12,5 +12,5 @@ class Sell extends Model
 
     //lista blanca atributos que deberían ser asignables en masa
     protected $fillable =
-    ['total', 'fecha'];
+    ['total', 'pago','cambio', 'fecha'];
 }

@@ -32,7 +32,7 @@
 			<tfoot>
 				<tr>
 					<th colspan="6">
-						<h5 class="izquierda">Registros encontrados: <span id="total_records"></span></h5>
+						<h5 class="izquierda">Registros encontrados: <span id="total_mayoreo"></span></h5>
 					</th>
 				</tr>
 			</tfoot>
