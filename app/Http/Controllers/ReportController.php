@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\SellProduct;
+use App\Models\User;
+use App\Models\SellProduct;
 use Mpdf\Mpdf;
 
 class ReportController extends Controller

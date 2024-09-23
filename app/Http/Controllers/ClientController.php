@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cliente;
+use App\Models\Cliente;
 use DataTables;
 use App\Http\Requests\ValidarFormularioRequest;
 

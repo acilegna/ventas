@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+ 
 use Illuminate\Support\Facades\Auth;
-use App\CashBox;
-use App\MovePayment;
+use App\Models\CashBox;
+use App\Models\MovePayment;
+ 
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class HomeController extends Controller
 {

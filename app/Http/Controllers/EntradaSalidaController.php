@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Entradasalida;
-use App\MovePayment;
+use App\Models\Entradasalida;
+use App\Models\MovePayment;
 use Illuminate\Support\Arr;
 
 

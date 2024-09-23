@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,4 +31,3 @@ class MoveClosing extends Model
     	return self::where("id_mov","=",$id_Mov)->count();	
     }
 }
-

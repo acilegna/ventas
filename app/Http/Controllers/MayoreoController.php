@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Product;
-use App\Mayoreo;
+use App\Models\Product;
+use App\Models\Mayoreo;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 class MayoreoController extends Controller

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cliente;
-use App\Product;
-use App\Sell;
-use App\SellProduct;
-use App\Mayoreo;
-use App\MovePayment;
+use App\Models\Cliente;
+use App\Models\Product;
+use App\Models\Sell;
+use App\Models\SellProduct;
+use App\Models\Mayoreo;
+use App\Models\MovePayment;
 
 class VentasController extends Controller
 {
@@ -23,76 +23,73 @@ class VentasController extends Controller
         session(['alert' => $alert]);
         $alert = session('alert');
     }
-    
+
     public function terminarOCancelarVenta(Request $request)
     {
-       
-      //  $ip  = getenv("COMPUTERNAME") ;
-        
-   
-       
-        if ($request->input("accion") == "terminar") {
-            $incrementa=0;
 
-           
-             $pago_venta = $request->input("pago");   
-           
+        //  $ip  = getenv("COMPUTERNAME") ;
+
+
+
+        if ($request->input("accion") == "terminar") {
+            $incrementa = 0;
+
+
+            $pago_venta = $request->input("pago");
+
             $cambio_venta = $request->input("cambio");
-          
-             
+
+
             $venta = new Sell();
             $venta->total = 0;
             $venta->pago = $pago_venta;
-            $venta->cambio = $cambio_venta;          
+            $venta->cambio = $cambio_venta;
             //$venta->fecha = date('y-m-d');
             $venta->save();
 
-            
-  
 
- $incrementa++;
- $id_user = Auth()->user()->id_employee;
-  
- $id_usu_openturno = MovePayment::getTurnoOpen($id_user);
- $usuario=$id_usu_openturno[0]->id_usu;
- $nventas=$id_usu_openturno[0]->numero_ventas;
- $numeroV=($incrementa + $nventas);
- 
-   MovePayment::updatVentas($usuario,$numeroV);
-   return $this->terminarVenta($request);
-    
-             
-          
+
+
+            $incrementa++;
+            $id_user = Auth()->user()->id_employee;
+
+            $id_usu_openturno = MovePayment::getTurnoOpen($id_user);
+            $usuario = $id_usu_openturno[0]->id_usu;
+            $nventas = $id_usu_openturno[0]->numero_ventas;
+            $numeroV = ($incrementa + $nventas);
+
+            MovePayment::updatVentas($usuario, $numeroV);
+            return $this->terminarVenta($request);
         } else {
             return $this->cancelarVenta();
-        }  
+        }
     }
 
     public function terminarVenta(Request $request)
     {
         //$id_cli= $request->input("id_cliente");
         $total_venta = $request->input("totalP");
-     
-         $productos = $this->obtenerProductos();
-        
-    
-                // Recorrer arreglo carrito de compras
-                foreach ($productos as $producto) {
-                    // El producto que se vende mandar datos para agregar en venta...  
-                    $venta = Sell::latest('id')->first();
-                    $id_venta = $venta["id"];
-                    $producto_vendido = new SellProduct();
-                    $userLog = auth()->id();
-                    $producto_vendido->fill([
-                        "id_venta" => $id_venta,
-                        "id_user" => $userLog,
-                        "id_producto" => $producto->id,
-                        "descripcion" => $producto->descripcion,
-                        "precio" => $producto->p_venta,
-                        "cantidad" => $producto->cantidad,
-                    ]);
-        
-                  //MOVIMIENTOS CAJA 
+
+        $productos = $this->obtenerProductos();
+
+
+        // Recorrer arreglo carrito de compras
+        foreach ($productos as $producto) {
+            // El producto que se vende mandar datos para agregar en venta...  
+            $venta = Sell::latest('id')->first();
+            $id_venta = $venta["id"];
+            $producto_vendido = new SellProduct();
+            $userLog = auth()->id();
+            $producto_vendido->fill([
+                "id_venta" => $id_venta,
+                "id_user" => $userLog,
+                "id_producto" => $producto->id,
+                "descripcion" => $producto->descripcion,
+                "precio" => $producto->p_venta,
+                "cantidad" => $producto->cantidad,
+            ]);
+
+            //MOVIMIENTOS CAJA 
             //consultar turnos abiertos
             $movimientos = MovePayment::turnOpen();
             $id = $movimientos[0]->id;
@@ -117,18 +114,6 @@ class VentasController extends Controller
 
         $this->vaciarProductos();
         return redirect()->route("viewVents")->with("mensaje", "Venta terminada");
-        
-                    
-                
-
-        
-
-            
-
-            
-        
-
-       
     }
 
     public function cancelarVenta()

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Product;
-use App\Inventario;
+use App\Models\Product;
+use App\Models\Inventario;
 use App\Procedures\Procedure;
 
 class ProductosController extends Controller

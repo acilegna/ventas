@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\CashBox;
-use App\MoveClosing;
-use App\MovePayment;
-use App\Sell;
+use App\Models\CashBox;
+use App\Models\MoveClosing;
+use App\Models\MovePayment;
+use App\Models\Sell;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
