@@ -11,8 +11,14 @@ class CashBox extends Model
     public $timestamps = true;
 
     //lista blanca atributos que deberían ser asignables en masa
-    protected $fillable = ['id', 'descripcion', 'nameclient','status'];
+    protected $fillable = ['id', 'descripcion', 'nameclient', 'status'];
 
+    //uno a muchos
+    public function cajaenmovimientocaja()
+    {
+        return $this->hasMany(MovePayment::class, 'id_caja');
+    }
+    
     //actualizar status al cerrar caja
     public static function updateStatusActive($sesionId_caja)
     {

@@ -54,6 +54,18 @@ class MovePayment extends Model
         'termino_en'
     ];
 
+
+
+    //Uno a Muchos (Inverso)
+    public function caja()
+    {
+        return $this->belongsTo(Caja::class, 'id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_employee');
+    }
+    
     public static function updateStatus($id_user, $fechaHora, $opcion = 9, $cierre = 0)
     {
         return self::where("id_usu", "=", $id_user)->where("status", "=", "Abierto")->update([

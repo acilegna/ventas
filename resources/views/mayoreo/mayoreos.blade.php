@@ -1,7 +1,7 @@
 @extends('panel.panel')
 @section('content')
 <div class="container-fluid">
-	<h3 id="title-prod">Módulo de Mayoresos</h3>
+	<h3 id="title-prod">Módulo de Mayoreos</h3>
 	<div class="contenido ">
 	@include("notificacion")
 		<div class="col-lg-6">

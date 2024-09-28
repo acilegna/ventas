@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Inventario;
 use App\Procedures\Procedure;
+use Psy\Readline\Hoa\Console;
 
 class ProductosController extends Controller
 {
@@ -213,7 +214,9 @@ class ProductosController extends Controller
 
   public function  viewFiltro()
   {
-    return view('productos.allProductos');
+ return view('productos.allProductos');
+     
+     
   }
   public function action(Request $request)
   {

@@ -13,4 +13,11 @@ class Entradasalida extends Model
     [
         'id_user', 'id_caja', 'cantidad', 'tipo', 'comentario', 'hora_fecha'
     ];
+
+
+    //relacion uno a muchos
+    public function cajas()
+    {
+        return $this->hasMany(CashBox::class, 'id');
+    }
 }

@@ -13,9 +13,31 @@ class SellProduct extends Model
 	//lista blanca atributos que deberían ser asignables en masa
 	protected $fillable =
 	[
-		'id_venta', 'id_user', 'id_producto', 'descripcion', 'precio', 'cantidad'
+		'id_venta',
+		'id_user',
+		'id_producto',
+		'descripcion',
+		'precio',
+		'cantidad'
 	];
 
+	//Uno a Muchos (Inverso)
+	public function producto()
+	{
+		return $this->belongsTo(Product::class, 'id');
+	}
+
+	public function usuario()
+	{
+		return $this->belongsTo(User::class, 'id_employee');
+	}
+
+	public function venta()
+	{
+		return $this->belongsTo(Ventas::class, 'id');
+	}
+
+	
 	public static function sellProductByUser($user, $date1, $date2)
 	{
 		return self::join('users', 'users.id_employee', '=', 'productos_vendidos.id_user')

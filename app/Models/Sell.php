@@ -13,4 +13,10 @@ class Sell extends Model
     //lista blanca atributos que deberían ser asignables en masa
     protected $fillable =
     ['total', 'pago','cambio', 'fecha'];
+
+    //uno a muchos
+    public function ventasenproductosVendido()
+    {
+        return $this->hasMany(SellProduct::class, 'id_venta');
+    }
 }

@@ -119,6 +119,9 @@ class MayoreoController extends Controller
   {
 
     return view('mayoreo.mayoreos');
+   
+  //   $NOMBREdePRODCUTO=  Mayoreo::find(2)->producto;
+       
   }
   public function recibeDatosmayoreo(Request $request)
   {

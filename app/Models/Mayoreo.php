@@ -15,6 +15,16 @@ class Mayoreo extends Model
     //lista blanca atributos que deberían ser asignables en masa
     protected $fillable =
     ['id_prod', 'cantidad', 'p_mayoreo'];
+    
+
+   // relacion uno a uno inversa de una relación hasOne con la tabla producto  utilizando el método belongsTo:
+    public function producto()
+    {
+        return $this->belongsTo(Product::class, 'id');
+    }
+
+        
+    
     public static function getMayoreoId($param)
     {
         return self::where('id_prod', $param)->get();
