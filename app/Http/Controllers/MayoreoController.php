@@ -92,6 +92,7 @@ class MayoreoController extends Controller
       } else {
         //muestra todos los datos
         $data = Mayoreo::Wholesale();
+       // $data=Product::all();
       }
       $total_row = $data->count();
       if ($total_row > 0) {

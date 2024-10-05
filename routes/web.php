@@ -109,7 +109,8 @@ Route::post("/buscarProducto", [VentasController::class, 'buscarProducto'])->nam
 
 Route::post("/terminarOCancelarVenta", [VentasController::class, 'terminarOCancelarVenta'])->name("terminarOCancelarVenta");
 Route::post('/agregaCantidad ', [VentasController::class, 'agregarCantidadProducto'])->name('agregaCantidad');
-Route::post('/addDelete ', [VentasController::class, 'agregarOEliminarCantidadProducto'])->name('addDelete');
+ 
+Route::post('/addDelete', [VentasController::class, 'addOrDeletProduct'])->name('addDelete');
 
 Route::get('/producto', [VentasController::class, 'producto'])->name('producto');
 Route::get('/verifica', [VentasController::class, 'verificaPrecio'])->name('verifica');

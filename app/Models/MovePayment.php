@@ -65,7 +65,7 @@ class MovePayment extends Model
     {
         return $this->belongsTo(User::class, 'id_employee');
     }
-    
+
     public static function updateStatus($id_user, $fechaHora, $opcion = 9, $cierre = 0)
     {
         return self::where("id_usu", "=", $id_user)->where("status", "=", "Abierto")->update([
@@ -76,9 +76,11 @@ class MovePayment extends Model
         ]);
     }
     //obtener datos de la sesion abierta
-    public static function getTurnoOpen($sesionUserTurno)
+    public static function getTurnoOpen($id_user)
     {
-        return self::where("id_usu", "=", $sesionUserTurno)->where("status", "=", "Abierto")->get();
+ 
+        return self::where("id_usu", "=", $id_user)->where("status", "=", "Abierto")->get();
+         
     }
 
     public static function updateCaja($sesionUserTurno, $fechaHora, $efectivoCaja)

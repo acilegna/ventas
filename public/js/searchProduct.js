@@ -34,7 +34,7 @@ $(document).ready(function () {
                             "</td> <td><input type = 'hidden' name = 'codigoProducto' value = " +
                             registros[i]["codigo"] +
                             "> " +
-                            "<a data - toggle='tooltip' data - placement='bottom' title = 'Agregar a venta' > "   +
+                            "<a data - toggle='tooltip' data - placement='bottom' title = 'Agregar a venta' > " +
                             "<button class='btn bordes' type='submit'  id='addOne' name='addOne' value='0'><i class='fa fa-cart-plus'></i> </button></a>" +
                             "<a data-toggle='tooltip' data-placement='bottom' title='Agregar Inventario' href='./viewInv/" +
                             registros[i]["id"] +
@@ -64,5 +64,3 @@ $(document).ready(function () {
         }
     });
 });
-
-

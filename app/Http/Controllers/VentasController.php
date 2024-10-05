@@ -28,17 +28,11 @@ class VentasController extends Controller
     {
 
         //  $ip  = getenv("COMPUTERNAME") ;
-
-
-
         if ($request->input("accion") == "terminar") {
+
             $incrementa = 0;
-
-
             $pago_venta = $request->input("pago");
-
             $cambio_venta = $request->input("cambio");
-
 
             $venta = new Sell();
             $venta->total = 0;
@@ -47,17 +41,15 @@ class VentasController extends Controller
             //$venta->fecha = date('y-m-d');
             $venta->save();
 
-
-
-
             $incrementa++;
             $id_user = Auth()->user()->id_employee;
 
             $id_usu_openturno = MovePayment::getTurnoOpen($id_user);
+
             $usuario = $id_usu_openturno[0]->id_usu;
+
             $nventas = $id_usu_openturno[0]->numero_ventas;
             $numeroV = ($incrementa + $nventas);
-
             MovePayment::updatVentas($usuario, $numeroV);
             return $this->terminarVenta($request);
         } else {
@@ -253,7 +245,7 @@ class VentasController extends Controller
         }
     }
 
-    public function agregarOEliminarCantidadProducto(Request $request)
+    public function addOrDeletProduct(Request $request)
     {
 
 
@@ -371,17 +363,15 @@ class VentasController extends Controller
 
     public function viewVentas()
     {
-
+        //productos graegados a la venta
         $total_produtos = $this->totalProductos();
+        //total venta
         $total = $this->mayoreo();
-        $sql_mayoreo = Mayoreo::getMayoreos();
         return view(
             "ventas.ventas",
             [
                 "total_produtos" => $total_produtos,
-                "sql_mayoreo" => $sql_mayoreo,
                 "total" => $total,
-                "clientes" => Cliente::all(),
             ]
         );
     }
