@@ -48,15 +48,15 @@
 		<div class="contenido">
 			<div class="form-inline">
 				<div class="btn-group group-left">
-					<a href="javascript:void(0)" class="btn btn-primary mb-2" id="busquedas"><i class="fa fa-search"></i>Buscar</a>
+					<a href="javascript:void(0)" class="btn btn-primary mb-2" id="busquedas"><i class="fa fa-search"></i> Buscar</a>
 				</div>
 
 				<div class="btn-group group-left">
-					<a href="#" class="btn btn-primary mb-2" id="verificadorb"><i class="fa fa-binoculars"></i>Verificador</a>
+					<a href="#" class="btn btn-primary mb-2" id="verificadorb"><i class="fa fa-binoculars"></i> Verificador de Precios</a>
 				</div>
 
 				<div class="btn-group group-left">
-					<a href="#" class="btn btn-primary mb-2" id="varios"><i class="fa fa-layer-group"></i>Varios</a>
+					<a href="#" class="btn btn-primary mb-2" id="varios"><i class="fa fa-layer-group"></i> Agregar Varios</a>
 				</div>
 			</div>
 		</div>
