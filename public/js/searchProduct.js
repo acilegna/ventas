@@ -52,7 +52,7 @@ $(document).ready(function () {
                 }
 
                 // $("#tbodyBuscar").html(data.table_data);
-                //$( '#total_recordsV' ).text( data.total_data );
+                 //$( '#total_reco' ).text( data.total_data );
             },
         });
     }

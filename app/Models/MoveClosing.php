@@ -8,7 +8,7 @@ class MoveClosing extends Model
 {
     protected $table = 'movimientos_cierre';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function setIdUserAttribute($id_user) {
         $this->attributes['id_user']= $id_user;

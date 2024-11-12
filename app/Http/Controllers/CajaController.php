@@ -115,10 +115,13 @@ class CajaController extends Controller
             'inputStatus' => 'required|nullable',
         ]);
         $nameCaja = $request->inputCaja;
+        $host  = getenv("COMPUTERNAME");
+         
         //recoger valor seleccionado  
         $status = $request->get('inputStatus');
         $caja = new CashBox;
         $caja->descripcion = $nameCaja;
+        $caja->nameclient = $host;
         $caja->status = $status;
         $caja->save();
         return redirect('allcaja');

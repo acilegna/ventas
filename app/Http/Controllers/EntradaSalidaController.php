@@ -35,13 +35,15 @@ class EntradaSalidaController extends Controller
         $acomulado_entradas += $entradaSalida;
 
 
-        $move = MovePayment::find($id);
+        //$move = MovePayment::find($id);
         if ($option == 1) {
-            $move->acomulado_salidas = $acomulado_salidas;
-            $move->save();
+            /* $move->acomulado_salidas = $acomulado_salidas;
+            $move->save(); */
+            MovePayment::where('id', $id)->update(['acomulado_salidas' => $acomulado_salidas]);
         } else {
-            $move->acomulado_entradas =  $acomulado_entradas;
-            $move->save();
+            MovePayment::where('id', $id)->update(['acomulado_entradas' => $acomulado_entradas]);
+            /*   $move->acomulado_entradas =  $acomulado_entradas;
+            $move->save(); */
         }
     }
 

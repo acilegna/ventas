@@ -48,11 +48,12 @@
 		<div class="contenido">
 			<div class="form-inline">
 				<div class="btn-group group-left">
-					<a href="javascript:void(0)" class="btn btn-primary mb-2" id="busquedas"><i class="fa fa-search"></i> Buscar</a>
+					<a href="javascript:void(0)" class="btn btn-primary mb-2 " id="busquedas"><i class="fa fa-search"></i> Buscar</a>
 				</div>
 
 				<div class="btn-group group-left">
-					<a href="#" class="btn btn-primary mb-2" id="verificadorb"><i class="fa fa-binoculars"></i> Verificador de Precios</a>
+					<a href="#" class="btn btn-primary mb-2" id="verificadorb"><i class="fa fa-binoculars"></i> Verificador de
+						Precios</a>
 				</div>
 
 				<div class="btn-group group-left">
@@ -82,8 +83,8 @@
 								<td>{{ $producto->codigo }}</td>
 								<td>{{ $producto->descripcion }}</td>
 								<td>{{ $producto->categoria }} </td>
-                                <td>${{ number_format($producto->p_venta, 2) }} </td>
-                               
+								<td>${{ number_format($producto->p_venta, 2) }} </td>
+
 								{{-- @php
 									$mayoreos = $producto->mayoreo["p_mayoreo"];
 								@endphp
@@ -141,7 +142,11 @@
 
 			</div>
 		@endif
+
+		 
+
 	</div>
+
 
 	<!-- Buscar Productos -->
 	<div class="modal fade" id="ajaxModel" aria-hidden="true">
@@ -159,7 +164,7 @@
 						@csrf
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Teclea las primeras letras o codigo del
-								productos</label>
+								producto</label>
 							<input type="text" class="form-control" id="buscaProducto" name="buscaProducto" placeholder="Buscar">
 						</div>
 						<div class="table-responsive">
@@ -177,7 +182,7 @@
 								<tfoot style="display:none">
 									<tr>
 										<th colspan="6">
-											<h5 class="izquierda">Registros encontrados: <span id="total_recordsV"></span>
+											<h5 class="izquierda">Registros encontrados: <span id="total_reco"></span>
 											</h5>
 										</th>
 									</tr>
@@ -243,10 +248,16 @@
 					<form action="{{ route("buscarProducto") }}" method="post" id="verificaForm" name="productForm"
 						class="form-horizontal">
 						@csrf
-						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">Agrega el codigo del producto</label>
-							<input type="text" class="form-control" id="txtbusca" name="txtbusca" placeholder="Buscar">
+						<label for="recipient-name" class="col-form-label">Código del producto</label>
+						<br>
+						<div class="form-group input-group mb-">
+
+							<button class="btn btn-outline-secondary " type="button"><i class="fa fa-search"></i></button>
+
+							<input type="text" class="form-control" id="txtbusca" name="txtbusca"
+								placeholder="Buscar"aria-describedby="button-addon1">
 						</div>
+
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Cantidad</label>
 							<input type="number" class="form-control" id="cantidad" name="cantidad">

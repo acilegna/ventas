@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Ticket;
+use App\Models\Product;
+use App\Models\Sell;
+use App\Models\SellProduct;
+use App\Models\Mayoreo;
+use App\Models\MovePayment;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -19,13 +25,22 @@ class UserController extends Controller
   }
   public function addUser(Request $request)
   {
-    /*     $recibeDatos = $request->all(); */
-    $usuarios = new User();
-    $usuarios->firstname = $request->inputUser;
-    $usuarios->lastname =  $request->inputApe;
-    $usuarios->email =  $request->inputEmail;
+
+    /*  $usuarios = new User();
+    $usuarios->firstname = $request->firstname;
+    $usuarios->lastname =  $request->lastname;
+    $usuarios->email =  $request->email;
     $usuarios->password =  Hash::make('password');
-    $usuarios->save();
+    $usuarios->save(); */
+    /*    $user = User::create([
+      'lastname' =>  $request->lastname,
+      'firstname' => $request->firstname,
+      'email' =>  $request->email,
+      'password' => Hash::make('password')
+    ]);    */
+    //dd($request->all());
+
+    User::create($request->all());
 
     return redirect()->route('viewUser')
       ->with([

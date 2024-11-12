@@ -86,7 +86,7 @@ class ProductosController extends Controller
 
 
     //modificar producto   
-   // $productos->descripcion  = $request->inputDescripcion;
+    // $productos->descripcion  = $request->inputDescripcion;
     //$productos->categoria   = $request->inputCategoria;
     $productos->p_compra    = $request->inputPrecioc;
     $productos->ganancia    = $request->inputGanancia;
@@ -184,6 +184,8 @@ class ProductosController extends Controller
       $productos->status      = $request->codcaja;
 
       $productos->save();
+
+       
       //obtener ultimo id insertado
       $insertedId = $productos->id;
 
@@ -214,9 +216,7 @@ class ProductosController extends Controller
 
   public function  viewFiltro()
   {
- return view('productos.allProductos');
-     
-     
+    return view('productos.allProductos');
   }
   public function action(Request $request)
   {

@@ -14,6 +14,8 @@ use App\Http\Controllers\HomeController,
 	App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportController;
 
+use App\Http\Controllers\HistorialController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -109,7 +111,7 @@ Route::post("/buscarProducto", [VentasController::class, 'buscarProducto'])->nam
 
 Route::post("/terminarOCancelarVenta", [VentasController::class, 'terminarOCancelarVenta'])->name("terminarOCancelarVenta");
 Route::post('/agregaCantidad ', [VentasController::class, 'agregarCantidadProducto'])->name('agregaCantidad');
- 
+
 Route::post('/addDelete', [VentasController::class, 'addOrDeletProduct'])->name('addDelete');
 
 Route::get('/producto', [VentasController::class, 'producto'])->name('producto');
@@ -134,15 +136,24 @@ Route::get('/deleteM/{id}', [MayoreoController::class, 'deleteMayoreo'])->name('
 
 
 Route::resource('client', ClientController::class);
- 
+
 Route::get('/viewClientes', [ClientController::class, 'index'])->name('viewClientes');
 Route::get('/deleteClients', [ClientController::class, 'destroy'])->name('deleteClients');
 
 // REPORTES
 Route::get('/viewReportes', [ReportController::class, 'ViewReportes'])->name('viewReportes');
+Route::get('/viewHistorial', [ReportController::class, 'viewHistorial'])->name('viewHistorial');
 Route::get('/reporte', [ReportController::class, 'reporte'])->name('reporte');
 Route::post('/pdfs', [ReportController::class, 'getGenerar'])->name('pdfs');
 
 //ENTRADAS Y SALIDAS
 Route::get('/entrada', [EntradaSalidaController::class, 'viewEntrada'])->name('entrada');
 Route::post('/save', [EntradaSalidaController::class, 'saveMovimientos'])->name('save');
+//search
+
+Route::get('/search', [VentasController::class, 'search'])->name('search');
+//historial
+Route::get('/views', [HistorialController::class, 'gets'])->name('views');
+
+Route::get('/actions', [HistorialController::class, 'actione'])->name('actions');
+Route::get('/actio', [HistorialController::class, 'action'])->name('actio');

@@ -18,7 +18,7 @@ class CreateProductosVendidosTable extends Migration
             $table->integer('id_venta');
             $table->integer('id_user')->default(1);
             $table->integer('id_producto');
-            $table->string('descripcion');
+            $table->integer('id_ticket');            
             $table->decimal('precio');
             $table->decimal('cantidad');
             $table->timestamps();

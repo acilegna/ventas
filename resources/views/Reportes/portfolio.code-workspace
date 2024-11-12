@@ -1,0 +1,25 @@
+{
+  "folders": [
+	{
+		"path": "../../../../portfolio"
+	},
+	{
+		"path": "../../../../back"
+	},
+	{
+		"path": "../../../../registro-alumnos"
+	},
+	{
+		"path": "../../.."
+	},
+	{
+		"path": "../../../../go"
+	},
+	{
+		"path": "../../../../laravelbreeze-webtd-main"
+	},
+	{
+		"path": "../../../../example-app"
+	}
+]
+}
