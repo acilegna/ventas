@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    fetch_customer_data();
+    get_products();
 
-    function fetch_customer_data(query = "", user = "") {
+    function get_products(query = "", user = "") {
         $.ajax({
             url: "./actio",
             method: "GET",
@@ -10,12 +10,11 @@ $(document).ready(function () {
                 user: user,
             },
             dataType: "json",
-
             success: function (data) {
                 var registross = eval(data.table_data);
                 var totalH = eval(data.total_data);
                 resultado = "";
-
+                //   alert(registross);
                 if (totalH >= 1) {
                     for (var i = 0; i < registross.length; i++) {
                         resultado +=
@@ -37,22 +36,21 @@ $(document).ready(function () {
             },
         });
     }
-    $(document).on("change", "#user", function () {
-        //referencia al elemento que se le está aplicando el evento.
-        //var date1 = $(this).val();
-
-        var query = $(this).val();
-        var user = $(this).val();
-        
-        //pasar parametro a la funcion
-        fetch_customer_data(query, user);
-    });
     $(document).on("keyup", "#searche", function () {
         var query = $(this).val();
         var user = $("#user").val();
-        fetch_customer_data(query, user);
+        get_products(query, user);
         if ($("#searche").val().length < 4) {
             $("#tbodytwo").html("");
         }
+    });
+
+    $(document).on("change", "#user", function () {
+        //referencia al elemento que se le está aplicando el evento.
+        var user = $(this).val();
+        var query = $("#searche").val();
+
+        //pasar parametro a la funcion
+        get_products(query, user);
     });
 });

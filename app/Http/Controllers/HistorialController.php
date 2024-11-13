@@ -48,20 +48,17 @@ class HistorialController extends Controller
         if ($request->ajax()) {
             $output = '';
             $query = $request->get('query');
-            $user =  $request->get('user');
+            $usua =  $request->get('user');
+            if ($query != '' and $usua != '') {
 
-            if ($query != '' and $user != '') {
-
-                $data = SellProduct::searchstw($query, $user);
-            } /* else {
+                $data = SellProduct::searchstw($query, $usua);
+            } else {
                 //muestra todos los datos
                 // $data = SellProduct::alls();
-            } */
+            }
             //si existe 
-
             if (isset($data)) {
                 $total_row = $data->count();
-
                 if ($total_row > 0) {
                     $output = $data;
                 } else {

@@ -42,7 +42,7 @@ $(document).ready(function () {
                     // console.log(registross);
 
                     $("#labelfolio").text(registross[0]["ticket"]["id"]);
-                    $("#labelcajero").text(registross[0]["id_user"]);
+                    //   $("#labelcajero").text(registross[0]["usuario"]["id_employee"]);
                     $("#labelpago").text(registross[0]["venta"]["pago"]);
                     $("#labeltotal").text(registross[0]["venta"]["total"]);
                 } else {

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use function Laravel\Prompts\alert;
+
 class SellProduct extends Model
 {
 	protected $table = 'productos_vendidos';
@@ -136,20 +138,20 @@ class SellProduct extends Model
 				$q->where('id', 'like', '%' . $query . '%');
 			})->get();
 	}
-	public static function searchstw($query, $user)
-	{
+	public static function searchstw($query, $usua)
+	{        
 
 		return self::select('id_ticket', 'id_venta', 'id_user', 'id_producto', 'cantidad')->distinct()
 			->with(['venta' => function ($sql) {
-				$sql->select('id', 'cantProducts', 'hora', 'total', 'pago');
+				$sql->select('id', 'cantProducts', 'hora', 'total', 'pago', 'fecha');
 			}])->with(['ticket' => function ($sql) {
 				$sql->select('id');
 			}])->whereHas('ticket', function ($q) use ($query) {
 				$q->where('id', 'like', '%' . $query . '%');
 			})->with(['producto' => function ($sql) {
 				$sql->select('id', 'descripcion', 'p_venta');
-			}])->with(['usuario' => function ($sql) {
-				$sql->select('id_employee', 'lastname');
-			}])->where('id_employee', '=', $user)->get();
+			}])->with(['usuario' => function ($sql) use ($usua) {
+				$sql->select('id_employee', 'lastname')->where('id_employee', $usua);
+			}])->get();
 	}
 }
