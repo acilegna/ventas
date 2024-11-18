@@ -47,10 +47,10 @@ class User extends Authenticatable
 
 
     //uno a muchos
-    public function userenproductosVendido()
+   /*  public function userenproductosVendido()
     {
         return $this->hasMany(SellProduct::class, 'id_user');
-    }
+    } */
 
     //uno a muchos
     public function usereninventario()

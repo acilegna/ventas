@@ -37,13 +37,13 @@ class VentasController extends Controller
 
             $total_produtos = $this->totalProductos();
             $venta = new Sell();
-           
+
             $venta->pago = $pago_venta;
             $venta->cambio = $cambio_venta;
             $venta->total = 0;
-            $venta->cantProducts= $total_produtos;
+            $venta->cantProducts = $total_produtos;
             $venta->hora = date("h:i:s");
-            $venta->fecha =date('y-m-d');
+            $venta->fecha = date('y-m-d');
             $venta->save();
 
             $incrementa++;
@@ -61,7 +61,7 @@ class VentasController extends Controller
             return $this->cancelarVenta();
         }
     }
- 
+
     public function terminarVenta(Request $request)
     {
         //$id_cli= $request->input("id_cliente");
@@ -92,10 +92,8 @@ class VentasController extends Controller
  */
 
             $producto_vendido = new SellProduct();
-            $userLog = auth()->id();
             $producto_vendido->fill([
                 "id_venta" => $id_venta,
-                "id_user" => $userLog,
                 "id_producto" => $producto->id,
                 "id_ticket" => 0,
                 "precio" => $producto->p_venta,
@@ -129,11 +127,13 @@ class VentasController extends Controller
         $host  = getenv("COMPUTERNAME");
         $client = CashBox::getnameclient($host);
         $idcaja = $client[0]['id'];
+        $userLog = auth()->id();
 
         $ticket = new Ticket();
 
         $ticket->fill([
-            "id_caja" =>  $idcaja
+            "id_caja" =>  $idcaja,
+            "id_user" =>  $userLog
         ]);
         //guardar en 
         $ticket->saveOrFail();
@@ -141,9 +141,9 @@ class VentasController extends Controller
         $id_tickt = $lastticket["id"];
 
         //update productos vendidos
-         $lastId = Sell::latest('id')->first();
+        $lastId = Sell::latest('id')->first();
         $id_sell = $lastId["id"];
-        
+
         SellProduct::updateTicket($id_tickt, $id_sell);
 
         $this->vaciarProductos();
@@ -329,7 +329,7 @@ class VentasController extends Controller
         if ($request->ajax()) {
             $output = '';
             $query = $request->get('query');
-        
+
             if ($query != '') {
                 //hace el filtro
                 $data = Product::searchProduct($query);

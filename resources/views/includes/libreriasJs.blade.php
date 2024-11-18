@@ -30,7 +30,7 @@
 <script src="{{ asset("js/allMayoreo.js") }}"></script>
 <script src="{{ asset("js/editMayoreo.js") }}"></script>
 <script src="{{ asset("js/allUsers.js") }}"></script>
-<script src="{{ asset("js/historial.js") }}"></script>
-<script src="{{ asset("js/historia.js") }}"></script>
-
+{{-- <script src="{{ asset("js/historial.js") }}"></script>
+<script src="{{ asset("js/historia.js") }}"></script> --}}
+<script src="{{ asset("js/allReport.js") }}"></script>
 <!-- fin dataTables -->

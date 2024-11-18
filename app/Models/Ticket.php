@@ -12,7 +12,7 @@ class Ticket extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     //lista blanca atributos que deberían ser asignables en masa
-    protected $fillable = ['id_caja' ];
+    protected $fillable = ['id_caja', 'id_user'];
 
 
     //uno a muchos
@@ -20,6 +20,12 @@ class Ticket extends Model
     {
         return $this->hasMany(SellProduct::class, 'id_ticket');
     }
-
-
+    public function caja()
+    {
+        return $this->belongsTo(CashBox::class, 'id_caja');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }

@@ -78,9 +78,8 @@ class MovePayment extends Model
     //obtener datos de la sesion abierta
     public static function getTurnoOpen($id_user)
     {
- 
+
         return self::where("id_usu", "=", $id_user)->where("status", "=", "Abierto")->get();
-         
     }
 
     public static function updateCaja($sesionUserTurno, $fechaHora, $efectivoCaja)

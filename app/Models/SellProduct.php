@@ -29,10 +29,10 @@ class SellProduct extends Model
 		return $this->belongsTo(Product::class, 'id_producto');
 	}
 
-	public function usuario()
+	/* 	public function usuario()
 	{
 		return $this->belongsTo(User::class, 'id_user');
-	}
+	} */
 
 	public function venta()
 	{
@@ -138,20 +138,71 @@ class SellProduct extends Model
 				$q->where('id', 'like', '%' . $query . '%');
 			})->get();
 	}
-	public static function searchstw($query, $usua)
-	{        
-
-		return self::select('id_ticket', 'id_venta', 'id_user', 'id_producto', 'cantidad')->distinct()
+	public static function searchstw($query)
+	{
+		return self::select('id_ticket', 'id_venta',  'id_producto', 'cantidad')->distinct()
 			->with(['venta' => function ($sql) {
 				$sql->select('id', 'cantProducts', 'hora', 'total', 'pago', 'fecha');
-			}])->with(['ticket' => function ($sql) {
-				$sql->select('id');
+			}])
+			->with(['ticket' => function ($sql) {
+				$sql->select('id', 'id_caja', 'id_user')
+					->with(['user' => function ($sql) {
+						$sql->select('id_employee', 'lastname');
+					}])
+					->with(['caja' => function ($sql) {
+						$sql->select('id');
+					}]);
 			}])->whereHas('ticket', function ($q) use ($query) {
-				$q->where('id', 'like', '%' . $query . '%');
-			})->with(['producto' => function ($sql) {
+				$q->where('id', $query);
+			})
+
+			->with(['producto' => function ($sql) {
 				$sql->select('id', 'descripcion', 'p_venta');
-			}])->with(['usuario' => function ($sql) use ($usua) {
-				$sql->select('id_employee', 'lastname')->where('id_employee', $usua);
-			}])->get();
+			}])
+			->get();
+
+		/* return self::select('id_ticket', 'id_venta',  'id_producto', 'cantidad')->distinct()
+			->with(['venta' => function ($sql) {
+				$sql->select('id', 'cantProducts', 'hora', 'total', 'pago', 'fecha');
+			}])
+			->with(['ticket' => function ($sql) {
+				$sql->select('id', 'id_caja', 'id_user')
+					->with(['user' => function ($sql) {
+						$sql->select('id_employee', 'lastname');
+					}])
+					->with(['caja' => function ($sql) {
+						$sql->select('id');
+					}]);
+			}])->whereHas('ticket', function ($q) use ($query) {
+				$q->where('id', $query);
+			})
+
+			->with(['producto' => function ($sql) {
+				$sql->select('id', 'descripcion', 'p_venta');
+			}])
+			->get(); */
 	}
 }
+
+/* return self::select('id_ticket', 'id_venta',  'id_producto', 'cantidad')->distinct()
+	->with(['venta' => function ($sql) {
+		$sql->select('id', 'cantProducts', 'hora', 'total', 'pago', 'fecha');
+	}])
+	->with(['ticket' => function ($sql) {
+		$sql->select('id', 'id_caja', 'id_user')
+		->with(['user' => function ($sql) {
+			$sql->select('id_employee', 'lastname');
+		}])
+			->with(['caja' => function ($sql) {
+				$sql->select('id');
+			}]);
+	}])->whereHas('ticket', function ($q) use ($query) {
+		$q->where('id', 'like', '%' . $query . '%');
+	})
+	->orwhereHas('ticket', function ($q) use ($usua) {
+		$q->where('id_user', $usua);
+	})
+	->with(['producto' => function ($sql) {
+		$sql->select('id', 'descripcion', 'p_venta');
+	}])
+	->get(); */

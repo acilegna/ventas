@@ -87,7 +87,10 @@
 							<tfoot>
 								<tr>
 									<th colspan="7">
-										<button>Devolver articulo seleccionado</button>
+										<button><a href="{{ route("gets") }}"></a>Devolver articulo seleccionado</button>
+										<div class="btn-group fl-rigth"><a href="{{ route("gets") }}" class="btn btn-success"><span
+													class="fa fa-mail-reply"></span> Regresar</a> </div>
+
 										<div class="input-group">
 											<label class="txtlabel">Pago con: <a id="labelpago"></a></label>
 										</div>

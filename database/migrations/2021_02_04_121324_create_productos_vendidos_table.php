@@ -15,8 +15,7 @@ class CreateProductosVendidosTable extends Migration
     {
         Schema::create('productos_vendidos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_venta');
-            $table->integer('id_user')->default(1);
+            $table->integer('id_venta');           
             $table->integer('id_producto');
             $table->integer('id_ticket');            
             $table->decimal('precio');

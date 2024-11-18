@@ -16,12 +16,13 @@ class CreateCajasTable extends Migration
         Schema::create('cajas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descripcion');
-            $table->integer('status');           
+            $table->string('nameclient');
+            $table->integer('status');
             $table->timestamps();
         });
     }
 
- 
+
 
 
     /**

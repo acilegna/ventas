@@ -153,7 +153,7 @@ Route::post('/save', [EntradaSalidaController::class, 'saveMovimientos'])->name(
 
 Route::get('/search', [VentasController::class, 'search'])->name('search');
 //historial
-Route::get('/views', [HistorialController::class, 'gets'])->name('views');
+Route::get('/gets', [HistorialController::class, 'gets'])->name('gets');
 
-Route::get('/actions', [HistorialController::class, 'actione'])->name('actions');
-Route::get('/actio', [HistorialController::class, 'action'])->name('actio');
+//Route::get('/actions', [HistorialController::class, 'actione'])->name('actions');
+//Route::get('/actio', [HistorialController::class, 'action'])->name('actio');
