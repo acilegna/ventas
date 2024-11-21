@@ -14,6 +14,7 @@ class CajaController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        //comentario
     }
     public function funcion()
     {
@@ -116,7 +117,7 @@ class CajaController extends Controller
         ]);
         $nameCaja = $request->inputCaja;
         $host  = getenv("COMPUTERNAME");
-         
+
         //recoger valor seleccionado  
         $status = $request->get('inputStatus');
         $caja = new CashBox;
@@ -331,7 +332,7 @@ class CajaController extends Controller
         $fechaHora = $datos[1];
         $totalCaja = $this->sumaTotalTurnoOpen();
         if ($value == 1) {
-             MovePayment::updateStatus($id_usu, $fechaHora, $totalCaja);
+            MovePayment::updateStatus($id_usu, $fechaHora, $totalCaja);
         } else {
             MovePayment::updateCaja($id_usu, $fechaHora, $totalCaja);
         }
