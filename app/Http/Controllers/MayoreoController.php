@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Product;
-use App\Mayoreo;
+use App\Models\Product;
+use App\Models\Mayoreo;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 
 class MayoreoController extends Controller
@@ -92,6 +92,7 @@ class MayoreoController extends Controller
       } else {
         //muestra todos los datos
         $data = Mayoreo::Wholesale();
+       // $data=Product::all();
       }
       $total_row = $data->count();
       if ($total_row > 0) {
@@ -119,6 +120,9 @@ class MayoreoController extends Controller
   {
 
     return view('mayoreo.mayoreos');
+   
+  //   $NOMBREdePRODCUTO=  Mayoreo::find(2)->producto;
+       
   }
   public function recibeDatosmayoreo(Request $request)
   {

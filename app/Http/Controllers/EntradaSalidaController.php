@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Entradasalida;
-use App\MovePayment;
+use App\Models\Entradasalida;
+use App\Models\MovePayment;
 use Illuminate\Support\Arr;
 
 
@@ -35,13 +35,15 @@ class EntradaSalidaController extends Controller
         $acomulado_entradas += $entradaSalida;
 
 
-        $move = MovePayment::find($id);
+        //$move = MovePayment::find($id);
         if ($option == 1) {
-            $move->acomulado_salidas = $acomulado_salidas;
-            $move->save();
+            /* $move->acomulado_salidas = $acomulado_salidas;
+            $move->save(); */
+            MovePayment::where('id', $id)->update(['acomulado_salidas' => $acomulado_salidas]);
         } else {
-            $move->acomulado_entradas =  $acomulado_entradas;
-            $move->save();
+            MovePayment::where('id', $id)->update(['acomulado_entradas' => $acomulado_entradas]);
+            /*   $move->acomulado_entradas =  $acomulado_entradas;
+            $move->save(); */
         }
     }
 
@@ -60,9 +62,7 @@ class EntradaSalidaController extends Controller
         $entradaSalida = $request->cantidadEntrada;
         $comentario = $request->comentario;
         $tipo = 'entrada';
-        //fecha y hora
-        $time = time();
-        $fechaHora = date('d-m-Y H:i:s', $time);
+
         $option = 0;
         $data = [
             'id_user' => $id_log,
@@ -70,7 +70,7 @@ class EntradaSalidaController extends Controller
             'cantidad' => $entradaSalida,
             'tipo' => $tipo,
             'comentario' => $comentario,
-            'hora_fecha' => $fechaHora,
+
         ];
         $datosMovepayment = [$id, $entradaSalida, $option, $acomulado_salidas, $acomulado_entradas];
 

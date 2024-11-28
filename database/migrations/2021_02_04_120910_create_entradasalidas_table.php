@@ -19,6 +19,7 @@ class CreateEntradasalidasTable extends Migration
             $table->integer('id_caja');
             $table->float('cantidad');
             $table->string('tipo');
+            $table->string('comentario');
             $table->timestamp('hora_fecha');
         });
     }

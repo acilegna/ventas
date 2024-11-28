@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Product;
-use App\Inventario;
+use App\Models\Product;
+use App\Models\Inventario;
 use App\Procedures\Procedure;
+use Psy\Readline\Hoa\Console;
 
 class ProductosController extends Controller
 {
@@ -85,8 +86,8 @@ class ProductosController extends Controller
 
 
     //modificar producto   
-    $productos->descripcion  = $request->inputDescripcion;
-    $productos->categoria   = $request->inputCategoria;
+    // $productos->descripcion  = $request->inputDescripcion;
+    //$productos->categoria   = $request->inputCategoria;
     $productos->p_compra    = $request->inputPrecioc;
     $productos->ganancia    = $request->inputGanancia;
     $productos->p_venta     = $request->inputPreciov;
@@ -183,6 +184,8 @@ class ProductosController extends Controller
       $productos->status      = $request->codcaja;
 
       $productos->save();
+
+       
       //obtener ultimo id insertado
       $insertedId = $productos->id;
 

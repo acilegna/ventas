@@ -15,12 +15,16 @@ class CreateVentasTable extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('total')->default(0); 
+            $table->float('pago')->default(0);
+            $table->float('cambio')->default(0);
+            $table->float('total')->default(0);
+            $table->float('cantProducts')->default(0);
+            $table->time('hora');
             $table->date('fecha');
             $table->timestamps();
         });
     }
- 
+
 
     /**
      * Reverse the migrations.

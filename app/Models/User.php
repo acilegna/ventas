@@ -1,6 +1,9 @@
 <?php
 
-namespace App;
+
+
+namespace App\Models;
+
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -17,12 +20,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $table = 'users';
-    protected $fillable = [
-        'lastname', 'email', 'password',
-    ];
-
-
+    public $timestamps = true;
     protected $primaryKey = 'id_employee';
+
+    protected $fillable = [
+
+        'lastname',
+        'firstname',
+        'email',
+        'password',
+    ];
 
 
 
@@ -33,9 +40,30 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
+
+
+    //uno a muchos
+   /*  public function userenproductosVendido()
+    {
+        return $this->hasMany(SellProduct::class, 'id_user');
+    } */
+
+    //uno a muchos
+    public function usereninventario()
+    {
+        return $this->hasMany(Inventario::class, 'id_usuario');
+    }
+
+
+    //uno a muchos
+    public function userenmovimientocaja()
+    {
+        return $this->hasMany(MovePayment::class, 'id_usu');
+    }
     /**
      * The attributes that should be cast to native types.
      *

@@ -1,7 +1,7 @@
 @extends('panel.panel')
 @section('content')
 <div class="container-fluid">
-	<h3 id="title-prod">Módulo de Mayoresos</h3>
+	<h3 id="title-prod">Módulo de Mayoreos</h3>
 	<div class="contenido ">
 	@include("notificacion")
 		<div class="col-lg-6">
@@ -32,7 +32,7 @@
 			<tfoot>
 				<tr>
 					<th colspan="6">
-						<h5 class="izquierda">Registros encontrados: <span id="total_records"></span></h5>
+						<h5 class="izquierda">Registros encontrados: <span id="total_mayoreo"></span></h5>
 					</th>
 				</tr>
 			</tfoot>

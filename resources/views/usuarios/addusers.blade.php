@@ -16,19 +16,19 @@
 
                 <div class="form-group col-md-3">
                     <label for="inputUser">Usuario</label>
-                    <input type="text" class="form-control" name="inputUser" id="inputUser" value="" required="">
+                    <input type="text" class="form-control" name="lastname" id="lastname" value="" required="">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputApe">Apellido</label>
-                    <input type="text" class="form-control" name="inputApe" id="inputApe" value=" " required="">
+                    <input type="text" class="form-control" name="firstname" id="firstname" value=" " required="">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputEmail">Email</label>
-                    <input type="email" class="form-control" name="inputEmail" id="inputEmail" value=" " required="">
+                    <input type="email" class="form-control" name="email" id="email" value=" " required="">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputEmail">Contraseña</label>
-                    <input type="password" class="form-control" name="inputPass" id="inputPass" value="" required="">
+                    <input type="password" class="form-control" name="password" id="password" value="" required="">
                 </div>
             </div>
 

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\SellProduct;
+use App\Models\User;
+use App\Models\SellProduct;
+use App\Models\CashBox;
 use Mpdf\Mpdf;
 
 class ReportController extends Controller
@@ -18,6 +19,14 @@ class ReportController extends Controller
 		//enviar usuarios a la vista
 		return view("Reportes.reporteVentas", ["usuarios" => User::all(),]);
 	}
+	public function ViewHistorial()
+	{
+		//enviar usuarios a la vista
+		return view(
+			"Reportes.historial",
+			["usuarios" => User::all(), "caja"=>CashBox::all()]
+		);
+	}
 	//funcion axaj para las busquedas
 	public function reporte(Request $request)
 	{
@@ -30,7 +39,6 @@ class ReportController extends Controller
 
 			if ($date1 != '' and $date2 != '' and $user != '') {
 				$data = SellProduct::sellProductByUser($user, $date1, $date2);
-			
 			}
 			if ($date1 != '' and $date2 != '' and $user == 'all') {
 				$data = SellProduct::sellProducts($date1, $date2);
@@ -107,6 +115,5 @@ class ReportController extends Controller
 		$namefile = 'Report_venta_del ' . $fecha_1 . ' al ' . $fecha_2 . '.pdf';
 		//$mpdf->Output($namefile, "I");
 		$mpdf->Output($namefile, "D");
-		 
 	}
 }

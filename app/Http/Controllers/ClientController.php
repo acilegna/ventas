@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cliente;
+use App\Models\Cliente;
 use DataTables;
 use App\Http\Requests\ValidarFormularioRequest;
 
@@ -15,8 +15,6 @@ class ClientController extends Controller
   }
   public function index(Request $request)
   {
-
-
     if ($request->ajax()) {
       $data = Cliente::latest()->get();
       return Datatables::of($data)
@@ -28,23 +26,22 @@ class ClientController extends Controller
     return view('clientes.allClientes');
   }
 
- 
-  public function store( Request $request)
+
+  public function store(Request $request)
   {
-  
     $validator = \Validator::make($request->all(), [
       'nombre' => 'required|alpha',
       'apellidos' => 'required|alpha',
       'telefono' => 'required',
-      'direccion' => 'required'       
+      'direccion' => 'required'
     ]);
-    
-     
-    
+
+
+
 
     if ($validator->fails()) {
       return response()->json(['errors' => $validator->errors()->all()]);
-    } 
+    }
 
     $result = Cliente::updateOrCreate(
       ['id' => $request->product_id],
@@ -56,9 +53,8 @@ class ClientController extends Controller
       ]
     );
 
-  
-    $arr = array('msg' => 'El registro ha sido modificado!', 'status' => true);
 
+    $arr = array('msg' => 'El registro ha sido modificado!', 'status' => true);
     return Response()->json($arr);
   }
 

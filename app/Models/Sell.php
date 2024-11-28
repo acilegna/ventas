@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,5 +12,11 @@ class Sell extends Model
 
     //lista blanca atributos que deberían ser asignables en masa
     protected $fillable =
-    ['total', 'fecha'];
+    [ 'pago','cambio', 'total', 'cantProducts', 'fecha','hora'];
+
+    //uno a muchos
+    public function ventasenproductosVendido()
+    {
+        return $this->hasMany(SellProduct::class, 'id_venta');
+    }
 }

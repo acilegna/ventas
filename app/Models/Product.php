@@ -1,7 +1,6 @@
 <?php
 
-namespace App;
-
+namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -18,6 +17,26 @@ class Product extends Model
         'existencia', 'status'
     ];
 
+    //Relación uno a uno
+    public function mayoreo()
+    {
+        return $this->hasOne(Mayoreo::class, 'id_prod');
+    }
+
+
+    
+    //uno a muchos
+    public function produtoVendido()
+    {
+        return $this->hasMany(SellProduct::class,'id_producto');
+    }
+
+    //uno a muchosx     
+    public function productoeninventario()
+    {
+        return $this->hasMany(Inventario::class, 'id_producto');
+    }
+    
     public static function getProducts($param)
     {
         return self::where('id', $param)->get();

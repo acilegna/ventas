@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CashBox;
 use Illuminate\Http\Request;
-use App\Cliente;
-use App\Product;
-use App\Sell;
-use App\SellProduct;
-use App\Mayoreo;
-use App\MovePayment;
+use App\Models\Ticket;
+use App\Models\Product;
+use App\Models\Sell;
+use App\Models\SellProduct;
+use App\Models\Mayoreo;
+use App\Models\MovePayment;
 
 class VentasController extends Controller
 {
@@ -26,7 +27,35 @@ class VentasController extends Controller
 
     public function terminarOCancelarVenta(Request $request)
     {
+
+        //  $ip  = getenv("COMPUTERNAME") ;
         if ($request->input("accion") == "terminar") {
+
+            $incrementa = 0;
+            $pago_venta = $request->input("pago");
+            $cambio_venta = $request->input("cambio");
+
+            $total_produtos = $this->totalProductos();
+            $venta = new Sell();
+
+            $venta->pago = $pago_venta;
+            $venta->cambio = $cambio_venta;
+            $venta->total = 0;
+            $venta->cantProducts = $total_produtos;
+            $venta->hora = date("h:i:s");
+            $venta->fecha = date('y-m-d');
+            $venta->save();
+
+            $incrementa++;
+            $id_user = Auth()->user()->id_employee;
+
+            $id_usu_openturno = MovePayment::getTurnoOpen($id_user);
+
+            $usuario = $id_usu_openturno[0]->id_usu;
+
+            $nventas = $id_usu_openturno[0]->numero_ventas;
+            $numeroV = ($incrementa + $nventas);
+            MovePayment::updatVentas($usuario, $numeroV);
             return $this->terminarVenta($request);
         } else {
             return $this->cancelarVenta();
@@ -37,26 +66,36 @@ class VentasController extends Controller
     {
         //$id_cli= $request->input("id_cliente");
         $total_venta = $request->input("totalP");
-        $productos = $this->obtenerProductos();
-        //insertar producto en venta antes para sacar id
-        $venta = new Sell();
-        $venta->total = 0;
-        $venta->fecha = date('y-m-d');
 
-        $venta->save();
+        $productos = $this->obtenerProductos();
+
 
         // Recorrer arreglo carrito de compras
         foreach ($productos as $producto) {
             // El producto que se vende mandar datos para agregar en venta...  
             $venta = Sell::latest('id')->first();
             $id_venta = $venta["id"];
+
+            /*  $host  = getenv("COMPUTERNAME");
+            $client = CashBox::getnameclient($host);
+            $idcaja = $client[0]['id'];
+
+            $ticket = new Ticket();
+
+            $ticket->fill([
+                "id_caja" =>  $idcaja
+            ]);
+            //guardar en 
+            $ticket->saveOrFail();
+            $lastticket = Ticket::latest('id')->first();
+            $id_tickt = $lastticket["id"];
+ */
+
             $producto_vendido = new SellProduct();
-            $userLog = auth()->id();
             $producto_vendido->fill([
                 "id_venta" => $id_venta,
-                "id_user" => $userLog,
                 "id_producto" => $producto->id,
-                "descripcion" => $producto->descripcion,
+                "id_ticket" => 0,
                 "precio" => $producto->p_venta,
                 "cantidad" => $producto->cantidad,
             ]);
@@ -83,6 +122,29 @@ class VentasController extends Controller
             $productoActualizado->existencia -=  $producto_vendido->cantidad;
             $productoActualizado->saveOrFail();
         }
+
+        //sacar ultimo registro de producto vendid
+        $host  = getenv("COMPUTERNAME");
+        $client = CashBox::getnameclient($host);
+        $idcaja = $client[0]['id'];
+        $userLog = auth()->id();
+
+        $ticket = new Ticket();
+
+        $ticket->fill([
+            "id_caja" =>  $idcaja,
+            "id_user" =>  $userLog
+        ]);
+        //guardar en 
+        $ticket->saveOrFail();
+        $lastticket = Ticket::latest('id')->first();
+        $id_tickt = $lastticket["id"];
+
+        //update productos vendidos
+        $lastId = Sell::latest('id')->first();
+        $id_sell = $lastId["id"];
+
+        SellProduct::updateTicket($id_tickt, $id_sell);
 
         $this->vaciarProductos();
         return redirect()->route("viewVents")->with("mensaje", "Venta terminada");
@@ -225,7 +287,7 @@ class VentasController extends Controller
         }
     }
 
-    public function agregarOEliminarCantidadProducto(Request $request)
+    public function addOrDeletProduct(Request $request)
     {
 
 
@@ -267,6 +329,7 @@ class VentasController extends Controller
         if ($request->ajax()) {
             $output = '';
             $query = $request->get('query');
+
             if ($query != '') {
                 //hace el filtro
                 $data = Product::searchProduct($query);
@@ -340,20 +403,25 @@ class VentasController extends Controller
             }
         }
     }
+    public function search()
+    {
+        return view(
+            "search.allSearch",
+
+        );
+    }
 
     public function viewVentas()
     {
-
+        //productos graegados a la venta
         $total_produtos = $this->totalProductos();
+        //total venta
         $total = $this->mayoreo();
-        $sql_mayoreo = Mayoreo::getMayoreos();
         return view(
             "ventas.ventas",
             [
                 "total_produtos" => $total_produtos,
-                "sql_mayoreo" => $sql_mayoreo,
                 "total" => $total,
-                "clientes" => Cliente::all(),
             ]
         );
     }
