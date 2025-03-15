@@ -1,21 +1,17 @@
 
 {
     "version": 2,
-    "regions": ["fra1"],
-    "functions": {
-        "api/index.php": {
-            "runtime": "vercel-php@0.7.1"
-        }
-    },
-    "routes": [
-        {
-            "src": "/build/(.*)",
-            "dest": "/build/$1"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/api/index.php"
-        }
+    "builds": [
+      {
+        "src": "index.php",
+        "use": "@vercel/php"
+      }
     ],
-    "outputDirectory": "public"
-}
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.php"
+      }
+    ]
+  }
+  
